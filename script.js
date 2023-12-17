@@ -21,6 +21,9 @@ try {
 
     const scheduleListElement = document.getElementById('schedule-panel');
 
+    const lineContainer = document.createElement('div');
+    lineContainer.classList.add('align-container', 'clearfix');
+
     //Clear any existing content in the list
     scheduleListElement.innerHTML = '';
 
@@ -43,6 +46,17 @@ try {
                         losingTeamAbbr = "PIT";
                     }
 
+                    const leftT = document.createElement('div');
+                    leftT.textContent = "left";
+                    leftT.classList.add("team-name");
+
+                    const rightT = document.createElement('div');
+                    rightT.textContent = "right";
+                    rightT.classList.add("score");
+        
+
+                    leftT + rightT
+
                     gameResultText = item.away + " " + item.awayPts +
                     "<br> @ <br>" + item.home + " " + item.homePts;
 
@@ -53,6 +67,12 @@ try {
 
                     //replace the losing team's abbr in the gameResultText with the colored span
                     gameResultText = gameResultText.replace(losingTeamAbbr, losingTeamAbbrSpan.outerHTML);
+
+                    lineContainer.appendChild(leftText);
+                    lineContainer.appendChild(rightText);
+                    
+                    container.appendChild(lineContainer);
+
                 }
                 else {
                     //format the date
@@ -67,6 +87,7 @@ try {
                 listItem.innerHTML = gameResultText;
 
                 listItem.classList.add('list-item');
+
                 scheduleListElement.appendChild(listItem);
             }
         });

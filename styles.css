@@ -5,6 +5,14 @@ body {
     background-color: #000000; /* Set body background to black */
 }
 
+.team-name {
+    text-align: left;
+}
+
+.score {
+    text-align: right;
+}
+
 .banner {
     background-size: cover;
     background-position: center;
@@ -18,10 +26,25 @@ body {
     padding: 0; /* Remove default padding */
 }
 
+.align-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 .list-item {
     margin-bottom: 10px; /* Add margin to create spacing between boxes */
     border-bottom: 1px solid #ccc; /* Add a border at the bottom of each box for separation */
     padding: 10px; /* Add padding for better visual appearance */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .overlay {
