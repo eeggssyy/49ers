@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>San Francisco 49ers</title>
+</head>
+
+<body>
+    <header class="banner" style="background-image: url('./gg.jpg');">
+        <div class="overlay">
+            <div class="container">
+                <h1>San Francisco 49ers</h1>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#roster">Roster</a></li>
+                        <li><a href="#schedule">Schedule</a></li>
+                        <li><a href="#injury">Injury Reserve</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-container">
+            <div class="side-panel" id="schedule-panel">
+                <h2>Upcoming Schedule</h2>
+                <p>No upcoming games scheduled at the moment.</p>
+            </div>
+
+            <div class="side-panel" id="injury-panel">
+                <h2>Injury Reserve</h2>
+                <ul id="injuryListPanel" class="injury-list">
+                </ul>
+            </div>
+
+            <div class="main-content">
+                <section id="home">
+                    <h2>Welcome to the 49ers Website!</h2>
+                    <p>Explore the latest updates and information about the San Francisco 49ers.</p>
+                </section>
+
+                <section id="roster">
+                    <h2>Team Roster</h2>
+                    <ul id="rosterList" class="roster-list">
+                        <!-- Roster information will be dynamically added using JavaScript -->
+                    </ul>
+                </section>
+
+                <section id="schedule">
+                    <h2>Schedule</h2>
+                    <ul id="scheduleList" class="schedule-list">  </ul>
+                </section>
+
+                <section id="playoff">
+                    <h2>Playoff Games</h2>
+                    <ul id="playoffList" class="playoff-list">  </ul>
+                </section>
+
+                <section id="preseason">
+                    <h2>Preseason Games</h2>
+                    <ul id="preseasonList" class="preseason-list">  </ul>
+                </section>
+
+                <section id="about">
+                    <h2>About the Team</h2>
+                    <p>The San Francisco 49ers are a professional American football team based in San Francisco, California.</p>
+                </section>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
