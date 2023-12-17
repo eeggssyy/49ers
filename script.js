@@ -1,5 +1,3 @@
-console.log('Before Axios request');
-
 const options = {
   method: 'GET',
   url: 'https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLTeamSchedule',
@@ -12,88 +10,94 @@ const options = {
     'X-RapidAPI-Host': 'tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com'
   }
 };
+console.log("test");
+const cachedData = localStorage.getItem('cachedData');
 
-try {
-    const response = await axios(options);  // Use axios instead of request
-    console.log(response.data); //log the response
+if (cachedData) {
+    console.log(cachedData);
+} else {
+    try {
+        const response = await axios(options);  // Use axios instead of request
+        console.log(response.data); //log the response
 
-    const data = response.data;
+        const data = response.data;
 
-    const scheduleListElement = document.getElementById('schedule-panel');
+        const scheduleListElement = document.getElementById('schedule-panel');
 
-    const lineContainer = document.createElement('div');
-    lineContainer.classList.add('align-container', 'clearfix');
+        const lineContainer = document.createElement('div');
+        lineContainer.classList.add('align-container', 'clearfix');
 
-    //Clear any existing content in the list
-    scheduleListElement.innerHTML = '';
+        //Clear any existing content in the list
+        scheduleListElement.innerHTML = '';
 
-    //Assuming 'scoringPlays' is an array in the response
-    if (Array.isArray(data.body.schedule)) {
-        //Iterate through the array and create list items
-        data.body.schedule.forEach(item => {
-            //if the game is part of the regular season
-            if (item.seasonType == "Regular Season") {
-                const listItem = document.createElement('div');
+        //Assuming 'scoringPlays' is an array in the response
+        if (Array.isArray(data.body.schedule)) {
+            //Iterate through the array and create list items
+            data.body.schedule.forEach(item => {
+                //if the game is part of the regular season
+                if (item.seasonType == "Regular Season") {
+                    const listItem = document.createElement('div');
 
-                let gameResultText;
+                    let gameResultText;
 
-                if (item.gameStatus == "Completed") {
-                    //check which team is the loser
-                    let losingTeamAbbr = (item.awayPts > item.homePts) ? item.home : item.away;
+                    if (item.gameStatus == "Completed") {
+                        //check which team is the loser
+                        let losingTeamAbbr = (item.awayPts > item.homePts) ? item.home : item.away;
 
-                    //idk why i need to hardcode this apparently 7 is more than 30
-                    if (item.home == "PIT") {
-                        losingTeamAbbr = "PIT";
+                        //idk why i need to hardcode this apparently 7 is more than 30
+                        if (item.home == "PIT") {
+                            losingTeamAbbr = "PIT";
+                        }
+
+                        const leftT = document.createElement('div');
+                        leftT.textContent = "left";
+                        leftT.classList.add("team-name");
+
+                        const rightT = document.createElement('div');
+                        rightT.textContent = "right";
+                        rightT.classList.add("score");
+            
+
+                        leftT + rightT
+
+                        gameResultText = item.away + " " + item.awayPts +
+                        "<br> @ <br>" + item.home + " " + item.homePts;
+
+                        //create a span for the losing team's abbr
+                        const losingTeamAbbrSpan = document.createElement('span');
+                        losingTeamAbbrSpan.textContent = losingTeamAbbr;
+                        losingTeamAbbrSpan.style.color = 'gray'; //change losing color to gray
+
+                        //replace the losing team's abbr in the gameResultText with the colored span
+                        gameResultText = gameResultText.replace(losingTeamAbbr, losingTeamAbbrSpan.outerHTML);
+
+                        lineContainer.appendChild(leftText);
+                        lineContainer.appendChild(rightText);
+                        
+                        container.appendChild(lineContainer);
+
+                    }
+                    else {
+                        //format the date
+                        const dateStr = item.gameDate;
+                        const month = dateStr.substring(4, 6);
+                        const day = dateStr.substring(6, 8);
+                        const formattedDate = `${month}/${day}`;
+
+                        gameResultText = item.away + " @ " + item.home + " (" + formattedDate + ", " + item.gameTime + ")";
                     }
 
-                    const leftT = document.createElement('div');
-                    leftT.textContent = "left";
-                    leftT.classList.add("team-name");
+                    listItem.innerHTML = gameResultText;
 
-                    const rightT = document.createElement('div');
-                    rightT.textContent = "right";
-                    rightT.classList.add("score");
-        
+                    listItem.classList.add('list-item');
 
-                    leftT + rightT
-
-                    gameResultText = item.away + " " + item.awayPts +
-                    "<br> @ <br>" + item.home + " " + item.homePts;
-
-                    //create a span for the losing team's abbr
-                    const losingTeamAbbrSpan = document.createElement('span');
-                    losingTeamAbbrSpan.textContent = losingTeamAbbr;
-                    losingTeamAbbrSpan.style.color = 'gray'; //change losing color to gray
-
-                    //replace the losing team's abbr in the gameResultText with the colored span
-                    gameResultText = gameResultText.replace(losingTeamAbbr, losingTeamAbbrSpan.outerHTML);
-
-                    lineContainer.appendChild(leftText);
-                    lineContainer.appendChild(rightText);
-                    
-                    container.appendChild(lineContainer);
-
+                    scheduleListElement.appendChild(listItem);
                 }
-                else {
-                    //format the date
-                    const dateStr = item.gameDate;
-                    const month = dateStr.substring(4, 6);
-                    const day = dateStr.substring(6, 8);
-                    const formattedDate = `${month}/${day}`;
+            });
+        }
 
-                    gameResultText = item.away + " @ " + item.home + " (" + formattedDate + ", " + item.gameTime + ")";
-                }
 
-                listItem.innerHTML = gameResultText;
-
-                listItem.classList.add('list-item');
-
-                scheduleListElement.appendChild(listItem);
-            }
-        });
+    } catch (error) {
+        console.error(error);
     }
-
-
-} catch (error) {
-    console.error(error);
 }
